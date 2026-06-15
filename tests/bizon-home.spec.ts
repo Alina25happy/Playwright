@@ -15,7 +15,7 @@ test.describe('bizon.by - Home page', () => {
       await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
 
       logStep('Assert page title and H1');
-      await expect(page).toHaveTitle(/Купить спортивное питание/i);
+      await expect(page).toHaveTitle('Купить спортивное питание в Минске | Интернет-магазин Бизон');
       await expect(page.getByRole('heading', { level: 1, name: 'Магазин спортивного питания' })).toBeVisible();
 
       logStep('Assert searchbox "Поиск в каталоге" is visible');
@@ -27,8 +27,9 @@ test.describe('bizon.by - Home page', () => {
       logStep('Click link "Бренды"');
       await page.getByRole('link', { name: 'Бренды' }).click();
 
-      logStep('Assert URL contains /brands');
-      await expect(page).toHaveURL(/\/brands\/?/);
+      logStep('Assert URL is https://bizon.by/brands and title is "Производители"');
+      await expect(page).toHaveURL('https://bizon.by/brands');
+      await expect(page).toHaveTitle('Производители');
     } catch (error) {
       logStep(`ERROR: ${String(error)}`);
       await page.screenshot({ path: 'test-failure.png', fullPage: true });
